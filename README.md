@@ -6,7 +6,9 @@
 This is a collection of cogs from multiple authors, I mainly only serve the purpose to translate/make adjustments to fit my bot.
 
 ## Featured Cogs
-
+| Cog | Author | Description |
+| --- | ------ | ----------- |
+| customhelp | [npc203](https://github.com/npc203) | A category themed custom help |
 
 ## Credits
 - To all the authors that made these cogs.
