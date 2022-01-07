@@ -1,0 +1,19 @@
+{
+    "name": "Cosette",
+    "short": "Cogs made for Cosette.",
+    "description": "These are the cogs I made for Cosette, user discretion is advised.",
+    "end_user_data_statement": "This cog does not persistantly store any data or metadata about users.",
+    "install_msg": "Thanks for installing Cosette, but since is made with the mind of only workid it not as usable.",
+    "author": [
+        "qenu"
+    ],
+    "required_cogs": {},
+    "requirements": [],
+    "tags": [
+        "Cosette"
+    ],
+    "min_bot_version": "3.3.10",
+    "hidden": false,
+    "disabled": false,
+    "type": "COG"
+}
