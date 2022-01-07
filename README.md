@@ -5,11 +5,13 @@
 # Collections
 This is a collection of cogs from multiple authors, I mainly only serve the purpose to translate/make adjustments to fit my bot.
 
-## Featured Cogs
+## Featured Other Cogs
 | Cog        | Author                                        | Source                                                   | Description |
 | ---------- | --------------------------------------------- | -------------------------------------------------------- | ----------- |
 | customhelp | [npc203](https://github.com/npc203)           | [Orignal Repo](https://github.com/npc203/npc-cogs)       | A category themed custom help |
-| defender   | [Twentysix26](https://github.com/Twentysix26) | [Original Repo](https://github.com/Twentysix26/x26-Cogs) | Automod feature for communities |
+| embedutils | [phenom4n4n](https://github.com/phenom4n4n)   | [Original Repo](https://github.com/phenom4n4n/phen-cogs) | Utility functions for embed editing |
+| webhook    | [phenom4n4n](https://github.com/phenom4n4n)   | [Original Repo](https://github.com/phenom4n4n/phen-cogs) | Utility functions for webhook editing |
+| roleutils  | [phenom4n4n](https://github.com/phenom4n4n)   | [Original Repo](https://github.com/phenom4n4n/phen-cogs) | Role related utility functions |
 
 ## Credits
 - To all the authors that made these cogs.
