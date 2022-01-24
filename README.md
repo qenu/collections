@@ -8,7 +8,7 @@ This is a collection of cogs from multiple authors, I mainly only serve the purp
 ## Featured Other Cogs
 | Cog        | Author                                        | Source                                                   | Description |
 | ---------- | --------------------------------------------- | -------------------------------------------------------- | ----------- |
-| customhelp | [npc203](https://github.com/npc203)           | [Orignal Repo](https://github.com/npc203/npc-cogs)       | A category themed custom help |
+| customhelp | [npc203](https://github.com/npc203)           | [Original Repo](https://github.com/npc203/npc-cogs)       | A category themed custom help |
 | embedutils | [phenom4n4n](https://github.com/phenom4n4n)   | [Original Repo](https://github.com/phenom4n4n/phen-cogs) | Utility functions for embed editing |
 | webhook    | [phenom4n4n](https://github.com/phenom4n4n)   | [Original Repo](https://github.com/phenom4n4n/phen-cogs) | Utility functions for webhook editing |
 | roleutils  | [phenom4n4n](https://github.com/phenom4n4n)   | [Original Repo](https://github.com/phenom4n4n/phen-cogs) | Role related utility functions |
