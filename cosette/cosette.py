@@ -13,12 +13,13 @@ RequestType = Literal["discord_deleted_user", "owner", "user", "user_strict"]
 
 log = logging.getLogger("red.qenu.cosette")
 status_to_zh = {
-    "online": "在線",
-    "idle": "閒置中",
+    "online": "用戶目前在線",
+    "idle": "用戶閒置中",
     "dnd": "請勿打擾",
-    "offline": "離線",
-    "mobile": "在手機上",
-    "streaming": "實況中",
+    "offline": "用戶離線",
+    "streaming": "用戶實況中",
+    "mobile": "用戶於行動裝置上",
+    "unknown": "用戶狀態未知",
 }
 
 class Cosette(commands.Cog):
@@ -80,7 +81,6 @@ class Cosette(commands.Cog):
                 log.info(error)
             self.bot.add_command(_old_userinfo)
 
-
     async def init(self):
         await self.bot.wait_until_ready()
         await self.gen_emojis()
@@ -135,7 +135,7 @@ class Cosette(commands.Cog):
     @commands.command(name="查看", aliases=["userinfo", "ui"], usage="[成員]")
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
-    async def userinfo(self, ctx, *, user: discord.Member = None):
+    async def userinfo(self, ctx: commands.Context, *, user: discord.Member = None):
         """查看成員資料"""
         mod = self.bot.get_cog("Mod")
         async with ctx.typing():
@@ -175,10 +175,14 @@ class Cosette(commands.Cog):
             else:
                 joined_on = "不明"
 
+            if user.status.name in status_to_zh:
+                status = user.status.name
             if user.is_on_mobile():
                 statusemoji = self.status_emojis["mobile"] or "\N{MOBILE PHONE}"
+                status = "mobile"
             elif any(a.type is discord.ActivityType.streaming for a in user.activities):
                 statusemoji = self.status_emojis["streaming"] or "\N{LARGE PURPLE CIRCLE}"
+                status = "streaming"
             elif user.status.name == "online":
                 statusemoji = self.status_emojis["online"] or "\N{LARGE GREEN CIRCLE}"
             elif user.status.name == "offline":
@@ -189,7 +193,8 @@ class Cosette(commands.Cog):
                 statusemoji = self.status_emojis["away"] or "\N{LARGE ORANGE CIRCLE}"
             else:
                 statusemoji = "\N{MEDIUM BLACK CIRCLE}\N{VARIATION SELECTOR-16}"
-            activity = "用戶目前{}".format(status_to_zh[user.status.name])
+                status = "unknown"
+            activity = "{}".format(status_to_zh[status])
             status_string = mod.get_status_string(user)
 
             if roles:
@@ -230,9 +235,7 @@ class Cosette(commands.Cog):
                 role_str = None
             data = discord.Embed(
                 description=(status_string or activity)
-                + f"\n\n{len(sharedguilds)}個共同伺服器。"
-                if len(sharedguilds) > 1
-                else f"\n\n{len(sharedguilds)}個共同伺服器。",
+                + f"\n{len(sharedguilds)}個共同伺服器",
                 colour=user.colour,
             )
 
@@ -243,11 +246,11 @@ class Cosette(commands.Cog):
             if names:
                 # May need sanitizing later, but mentions do not ping in embeds currently
                 val = filter_invites(", ".join(names))
-                data.add_field(name="過去的使用者名稱", value=val, inline=False)
+                data.add_field(name="過往名稱", value=val, inline=False)
             if nicks:
                 # May need sanitizing later, but mentions do not ping in embeds currently
                 val = filter_invites(", ".join(nicks))
-                data.add_field(name="過去的暱稱", value=val, inline=False)
+                data.add_field(name="過往暱稱", value=val, inline=False)
             if voice_state and voice_state.channel:
                 data.add_field(
                     name="目前所在語音頻道",
@@ -309,6 +312,13 @@ class Cosette(commands.Cog):
                             bankstat += f"**Adventure**: {humanize_number(adventure_currency)} {await adventure_bank.get_currency_name(ctx.guild)}"
 
                 data.add_field(name="Balances" if balance_count > 1 else "Balance", value=bankstat)
+
+            if "Cookies" in self.bot.cogs:
+                cog = self.bot.get_cog("Cookies")
+                cookies = await cog.get_cookies(user)
+                if cookies:
+                    data.add_field(name=":cookie: Cookies", value=f"擁有 {humanize_number(cookies)}片餅乾")
+
             banner = (
                 await self.bot.http.request(discord.http.Route("GET", f"/users/{user.id}"))
             ).get("banner", None)
@@ -320,8 +330,11 @@ class Cosette(commands.Cog):
                 data.set_image(url=banner_url)
             await ctx.send(embed=data)
 
-
-
+    @commands.command(name="幫助")
+    async def help(self, ctx: commands.Context, *, params: str = None):
+        """取得幫助"""
+        # Literally an alias without using alias
+        return await ctx.invoke(self.bot.get_command("help"), thing_to_get_help_for=params)
 
 
 
